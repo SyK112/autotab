@@ -180,7 +180,7 @@ Tüm Chromium tabanlı tarayıcılarda (**Brave, Google Chrome, Microsoft Edge, 
 
 5. **Eklentiyi Yükleyin:**
    * Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
-   * 2. adımda **ZIP'ten çıkarttığınız klasörü seçin** *(ZIP dosyasının kendisini veya doğrudan İndirilenler klasörünüzü seçmeyin)*.
+   * Daha önce **ZIP'ten çıkarttığınız klasörü seçin** *(ZIP dosyasının kendisini veya doğrudan İndirilenler klasörünüzü seçmeyin)*.
 
 *Tebrikler! AutoTab hemen çalışmaya başlayacak ve sekmelerinizi otomatik olarak düzenleyecektir.*
 
