@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoTab</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo-box">
+      <img src="icons/icon48.png" alt="AutoTab" class="logo">
+      <div class="title-group">
+        <h1>AutoTab</h1>
+        <span class="badge" id="headerBadge">Active</span>
+      </div>
+    </div>
+    <button id="langToggle" class="lang-btn" title="Switch Language / Dili Değiştir">TR</button>
+  </div>
+
+  <div class="card main-toggle-card">
+    <div class="toggle-info">
+      <span class="label-title" id="lblAutoGroup">Auto Grouping</span>
+      <span class="label-desc" id="statusDesc">Runs silently in background</span>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="autoGroupEnabled">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="card info-card">
+    <div class="info-row">
+      <span class="info-dot"></span>
+      <span id="infoRule1">Automatically groups when <strong>2+ tabs</strong> share the same site.</span>
+    </div>
+    <div class="info-row">
+      <span class="info-dot dot-alt"></span>
+      <span id="infoRule2">Disbands group automatically when only <strong>1 tab remains</strong>.</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="btnGroupNow" class="btn btn-primary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+      <span id="btnGroupNowText">Group Now</span>
+    </button>
+    <button id="btnUngroupNow" class="btn btn-secondary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <span id="btnUngroupNowText">Ungroup All</span>
+    </button>
+  </div>
+
+  <div class="footer">
+    <span id="toastMsg" class="toast">Saved</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
