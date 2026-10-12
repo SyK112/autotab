@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "AutoTab - Automated Tab Grouper",
+    "description": "The name of the extension."
+  },
+  "appDesc": {
+    "message": "Automatically groups tabs by domain in real time. Zero clicks, clean tab bar, lightweight and open-source.",
+    "description": "The description of the extension."
+  },
+  "actionTitle": {
+    "message": "AutoTab",
+    "description": "Tooltip for the extension icon."
+  }
+}

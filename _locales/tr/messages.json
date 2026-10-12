@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "AutoTab - Akıllı & Tam Otomatik Sekme Gruplayıcı",
+    "description": "Eklentinin adı."
+  },
+  "appDesc": {
+    "message": "Sekmeleri alan adına göre arka planda anında otomatik gruplar. Sıfır buton, temiz sekme çubuğu, hafif ve açık kaynak.",
+    "description": "Eklentinin açıklaması."
+  },
+  "actionTitle": {
+    "message": "AutoTab",
+    "description": "Uzantı butonu araç ipucu."
+  }
+}
