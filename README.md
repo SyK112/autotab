@@ -62,20 +62,24 @@ Most tab manager extensions in the Chrome Web Store advertise **"Auto Grouping"*
 
 Works out of the box with any Chromium-based browser (**Brave, Chrome, Edge, Vivaldi, Arc**):
 
-1. **Clone this repository** or **[Download the ZIP](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)**:
-   * **Via Git:** `git clone https://github.com/SyK112/autotab.git`
-   * **Or Direct Download:** Click the green **Code** button at the top and select **Download ZIP** (or use the link above).
+1. **Download the Extension:**
+   * **[Click here to Download the ZIP](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** *(or click the green **Code** button at the top and select **Download ZIP**)*.
+   * *(Alternatively via Git: `git clone https://github.com/SyK112/autotab.git`)*
 
-2. **Open Extensions Manager** in your browser:
+2. **Extract the ZIP:**
+   * Right-click the downloaded ZIP file and extract it into a folder (e.g., `autotab`).
+
+3. **Open Extensions Manager in your browser:**
    * **Brave:** `brave://extensions`
    * **Chrome:** `chrome://extensions`
    * **Edge:** `edge://extensions`
 
-3. **Enable Developer Mode** (toggle switch in the top-right corner).
+4. **Enable Developer Mode:**
+   * Turn on the **Developer mode** toggle in the top-right corner.
 
-4. Click **Load unpacked** (Paketlenmemiş öğe yükle) in the top-left corner.
-
-5. Select the `autotab` directory containing `manifest.json`.
+5. **Load the Extension:**
+   * Click the **Load unpacked** (Paketlenmemiş öğe yükle) button in the top-left corner.
+   * Select the **extracted folder** from Step 2 *(do not select the ZIP file itself or your entire Downloads folder)*.
 
 *Done! AutoTab is immediately active and organizing your tabs in real time.*
 
@@ -159,20 +163,24 @@ Chrome Web Store'daki birçok sekme düzenleyici eklenti **"Otomatik Gruplama"**
 
 Tüm Chromium tabanlı tarayıcılarda (**Brave, Google Chrome, Microsoft Edge, Vivaldi, Arc**) doğrudan çalışır:
 
-1. **Depoyu klonlayın** veya **[ZIP Dosyasını Doğrudan İndirin](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)**:
-   * **Git ile:** `git clone https://github.com/SyK112/autotab.git`
-   * **Doğrudan İndirme:** Sayfanın üstündeki yeşil **Code** butonuna basıp **Download ZIP** deyin (veya yukarıdaki bağlantıya tıklayın).
+1. **Eklentiyi İndirin:**
+   * **[ZIP Dosyasını Doğrudan İndirin](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** *(veya sayfanın üstündeki yeşil **Code** butonuna basıp **Download ZIP** deyin)*.
+   * *(Alternatif olarak Git ile: `git clone https://github.com/SyK112/autotab.git`)*
 
-2. **Eklenti Yöneticisini Açın:**
+2. **ZIP Dosyasını Klasöre Çıkartın:**
+   * İndirdiğiniz ZIP dosyasına sağ tıklayıp bir klasöre çıkartın (örn: `autotab`).
+
+3. **Tarayıcınızda Eklenti Yöneticisini Açın:**
    * **Brave:** `brave://extensions`
    * **Chrome:** `chrome://extensions`
    * **Edge:** `edge://extensions`
 
-3. Sağ üst köşedeki **Geliştirici modu**nu (Developer mode) açın.
+4. **Geliştirici Modunu Açın:**
+   * Sağ üst köşedeki **Geliştirici modu** (Developer mode) anahtarını açın.
 
-4. Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
-
-5. İçinde `manifest.json` dosyasının bulunduğu `autotab` klasörünü seçin.
+5. **Eklentiyi Yükleyin:**
+   * Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
+   * 2. adımda **ZIP'ten çıkarttığınız klasörü seçin** *(ZIP dosyasının kendisini veya doğrudan İndirilenler klasörünüzü seçmeyin)*.
 
 *Tebrikler! AutoTab hemen çalışmaya başlayacak ve sekmelerinizi otomatik olarak düzenleyecektir.*
 
