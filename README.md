@@ -62,10 +62,9 @@ Most tab manager extensions in the Chrome Web Store advertise **"Auto Grouping"*
 
 Works out of the box with any Chromium-based browser (**Brave, Chrome, Edge, Vivaldi, Arc**):
 
-1. **Clone this repository** (or download the ZIP):
-   ```bash
-   git clone https://github.com/SyK112/autotab.git
-   ```
+1. **Clone this repository** or **[Download the ZIP](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)**:
+   * **Via Git:** `git clone https://github.com/SyK112/autotab.git`
+   * **Or Direct Download:** Click the green **Code** button at the top and select **Download ZIP** (or use the link above).
 
 2. **Open Extensions Manager** in your browser:
    * **Brave:** `brave://extensions`
@@ -160,10 +159,9 @@ Chrome Web Store'daki birçok sekme düzenleyici eklenti **"Otomatik Gruplama"**
 
 Tüm Chromium tabanlı tarayıcılarda (**Brave, Google Chrome, Microsoft Edge, Vivaldi, Arc**) doğrudan çalışır:
 
-1. **Bu depoyu indirin veya klonlayın:**
-   ```bash
-   git clone https://github.com/SyK112/autotab.git
-   ```
+1. **Depoyu klonlayın** veya **[ZIP Dosyasını Doğrudan İndirin](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)**:
+   * **Git ile:** `git clone https://github.com/SyK112/autotab.git`
+   * **Doğrudan İndirme:** Sayfanın üstündeki yeşil **Code** butonuna basıp **Download ZIP** deyin (veya yukarıdaki bağlantıya tıklayın).
 
 2. **Eklenti Yöneticisini Açın:**
    * **Brave:** `brave://extensions`
@@ -196,5 +194,5 @@ Topluluk önerilerine ve geliştirmelere açığız:
 Bu proje **MIT Lisansı** altında sunulmaktadır. Ayrıntılar için [`LICENSE`](LICENSE) belgesine göz atabilirsiniz.
 
 <div align="center">
-  <sub>Crafted with precision by <a href="https://github.com/SyK112">Süleyman Yasin Kazancı</a> and the open-source community.</sub>
+  <sub>Crafted with precision by <a href="https://github.com/SyK112">Süleyman YK</a> and the open-source community.</sub>
 </div>
