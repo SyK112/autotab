@@ -1,21 +1,22 @@
 <div align="center">
 
-  <h1>🗂️ AutoTab</h1>
-  <p><strong>Zero-click, truly automated, lightweight tab grouper for Chromium browsers.</strong></p>
-  <p>No buttons to press. No manual organizing. No paywalls.</p>
+  <h1>🗂️ AutoTab v2.0</h1>
+  <p><strong>Zero-click automated tab grouper, cloud-synced Tab Vault (OneTab+), Smart Active Tab Guard, and 4-Layer Anti-Refresh Shield for Chromium browsers.</strong></p>
+  <p>No manual organizing. No lost form text. No forced page reloads. No paywalls.</p>
 
   <p>
+    <a href="https://chromewebstore.google.com/detail/autotab-automated-tab-gro/bcojmikhhechoghnkjlmkobigabibfnp"><img src="https://img.shields.io/badge/Chrome_Web_Store-v2.0-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Web Store"></a>
+    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/What's_New_in_v2.0-Neler_Yeni%3F-8b5cf6?style=for-the-badge" alt="What's New in v2.0"></a>
     <a href="https://github.com/SyK112/autotab/stargazers"><img src="https://img.shields.io/github/stars/SyK112/autotab?style=for-the-badge&logo=github&color=blue" alt="Stars"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License: MIT"></a>
-    <a href="#"><img src="https://img.shields.io/badge/Manifest-V3-brightgreen.svg?style=for-the-badge&logo=googlechrome" alt="Manifest V3"></a>
     <a href="#"><img src="https://img.shields.io/badge/Dependencies-Zero%20(Pure%20JS)-yellow.svg?style=for-the-badge&logo=javascript" alt="Zero Dependencies"></a>
-    <a href="https://github.com/SyK112/autotab/pulls"><img src="https://img.shields.io/badge/PRs-Welcome-emerald.svg?style=for-the-badge" alt="PRs Welcome"></a>
   </p>
 
-  <sub>Supports <strong>Brave</strong>, <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Vivaldi</strong>, <strong>Arc</strong>, and all Chromium browsers.</sub>
+  <sub>Supports <strong>Brave</strong>, <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Vivaldi</strong>, <strong>Opera</strong>, and all Chromium browsers.</sub>
 
   <br/><br/>
   <p>
+    <a href="CHANGELOG.md"><strong>✨ What's New in v2.0 (Neler Yeni?)</strong></a> •
     <a href="#english"><strong>🇬🇧 English Documentation</strong></a> •
     <a href="#turkce"><strong>🇹🇷 Türkçe Dokümantasyon</strong></a>
   </p>
@@ -25,63 +26,53 @@
 
 <h2 id="english">🇬🇧 English Documentation</h2>
 
-### 💡 The Problem & Why AutoTab?
+### 🚀 What Makes AutoTab v2.0 Different?
 
-Most tab manager extensions in the Chrome Web Store advertise **"Auto Grouping"**, yet in reality:
-1. You have to open a sidebar or popup and **click an "Auto Group" button every single time** you want to organize tabs.
-2. They clutter your tab bar by creating group headers even for **single, standalone tabs**.
-3. When you close grouped tabs and leave just one, the group header stays stuck, wasting space.
-4. Basic real-time automation and custom domain rules are often locked behind **paid "Pro" subscriptions**.
+Most tab extensions force you to install three separate, bloated tools — one for grouping tabs, another for stashing tabs to free up memory (like OneTab), and another to stop websites from auto-reloading. Even worse, they lock core features behind monthly subscriptions, lose your unsaved text when closing tabs, or leave single-tab groups cluttering your tab bar.
+
+**AutoTab v2.0 unites all three pillars in a single, dependency-free `< 40 KB` extension:**
+
+1. **⚡ Zero-Click Auto Grouping (2+ Rule & Auto-Dissolve):** Silently groups tabs by root domain the moment 2+ tabs from the same site exist, and automatically ungroups when only 1 tab remains.
+2. **🗄️ Cloud-Synced Tab Vault (OneTab+):** Stash open tabs into a clean, domain-grouped vault to reclaim RAM instantly. Powered by a chunked `chrome.storage.sync` engine that syncs across your computers via your browser profile — no external accounts required.
+3. **🛡️ Smart Active Tab Guard (`< 120ms`):** Before closing tabs into the Vault, AutoTab scans pages in parallel for **unsaved text in inputs/textareas/editors** or **playing video/audio**. Active tabs are backed up to the Vault, **but prevented from closing** so you never lose a draft message or interrupt a stream.
+4. **🚫 4-Layer Anti-Refresh & Scroll Lock Shield:** Stops news websites and portals from forcibly auto-reloading pages to inflate ad impressions. Blocks `<meta http-equiv="refresh">`, `visibilitychange`/`focus` reload traps, unattended `setTimeout`/`setInterval` reload timers, and `Navigation API` reloads — while locking and restoring your exact scroll position (`Scroll Lock`) and counting blocked attempts live.
 
 #### 📊 Feature Comparison
 
-| Feature | 🗂️ AutoTab | 📦 Typical Extensions (Tabbiy, etc.) |
+| Feature | 🗂️ AutoTab v2.0 | 📦 Typical Tab Groupers / OneTab |
 | :--- | :---: | :---: |
-| **Zero-Click Automation** | **✅ 100% Background (Instant)** | ❌ Click "Auto Group" every time |
-| **Clean Tab Bar (2+ Rule)** | **✅ Only groups when 2+ tabs exist** | ❌ Clutters with 1-tab groups |
-| **Instant Auto-Ungroup** | **✅ Dissolves when 1 tab remains** | ❌ Leaves dangling group headers |
-| **Pinned Tab Protection** | **✅ Never touches pinned tabs** | ⚠️ Often moves or breaks pinned tabs |
-| **Domain Redirect Guard** | **✅ Auto-ungroups if tab changes site** | ❌ Stays in the wrong group |
-| **Footprint & Memory** | **✅ < 20 KB (Zero frameworks)** | ⚠️ 500 KB - 5 MB (Webpack/React bundles) |
-| **Privacy & Telemetry** | **✅ 100% Local (Zero tracking)** | ⚠️ Sends analytics & account syncs |
-| **Pricing** | **✅ Free & Open Source (MIT)** | ❌ Monthly/yearly paywalls |
+| **Zero-Click Auto Grouping** | **✅ 100% Background (Instant)** | ❌ Click "Group" manually every time |
+| **Clean Tab Bar (2+ Rule & Auto-Ungroup)** | **✅ Groups at 2+, dissolves at 1** | ❌ Clutters with 1-tab groups |
+| **Tab Vault & Cross-Device Sync** | **✅ Built-in Chunked `storage.sync`** | ⚠️ Local-only or paid cloud account |
+| **Smart Domain Merge & Deduplication** | **✅ Merges groups & updates timestamps** | ❌ Creates duplicate messy lists |
+| **Unsaved Text & Playing Media Guard** | **✅ Backs up & keeps active tabs open** | ❌ Closes tabs & destroys unsaved text |
+| **Anti-Refresh & Scroll Position Lock** | **✅ 4-Layer Shield + Live Counter** | ❌ Not supported |
+| **Footprint & Dependencies** | **✅ < 40 KB (Zero frameworks)** | ⚠️ 1 MB – 10 MB bundles |
+| **Privacy & Pricing** | **✅ 100% Local/Browser Sync • MIT Free** | ❌ Telemetry & monthly paywalls |
 
 ---
 
-### ✨ Core Mechanics
+### ✨ Key Capabilities in Detail
 
-- **⚡ True Event-Driven Background Engine:** Powered by a Manifest V3 Service Worker. Listens to `chrome.tabs.onUpdated` and `chrome.tabs.onCreated` silently.
-- **🛡️ 300ms Debounce Queue:** Rapidly clicking links, opening bookmarks, or navigating redirects won't cause tab stutter or browser locking.
-- **🎯 Intelligent Root Domain Extraction:** Correctly identifies root domains across complex multi-part TLDs (e.g., `mail.google.com` ➔ `Google`, `unsan.com.tr` ➔ `Unsan`, `bbc.co.uk` ➔ `BBC`).
-- **📌 Pinned Tab Immunity:** Pinned tabs remain safely locked on the left. Pinning a grouped tab automatically removes it from the group.
-- **🎨 Deterministic Color Hashing:** Mathematical string hashing guarantees that each domain always receives the exact same signature color (YouTube ➔ Red, GitHub ➔ Purple, Google ➔ Blue).
+- **🗄️ Smart Tab Vault (`dashboard.html`):**
+  - **Smart Domain Merge:** Saving tabs from `youtube.com` automatically merges them into your existing `YouTube` vault group instead of creating separate date-stamped clutter.
+  - **Upsert Deduplication:** Saving an already-stashed URL never creates a duplicate; it simply updates its timestamp and moves it to the top of its group.
+  - **Left-Click vs. Middle-Click (`Ctrl+Click`):** Left-clicking a link opens the tab and removes it from the vault. Middle-clicking (mouse wheel) or `Ctrl+Click` opens the tab in the background while **keeping it in the vault**.
+  - **4-Way In-Group Sorting & Instant Search:** Sort links inside groups by *Newest First*, *Oldest First*, *A ➔ Z*, or *Z ➔ A*, and export/import full JSON backups anytime.
+- **🚫 4-Layer Anti-Refresh & Scroll Lock Engine:**
+  - Toggle protection for any website with one click from the Popup or manage protected domains from the Vault Dashboard.
+  - Displays a self-fading on-page notification badge (`🛡️ AutoTab`) and a live per-tab blocked refresh counter inside the extension popup.
 
 ---
 
-### 🚀 Quick Start (Installation in 30 Seconds)
+### 🚀 Quick Start (Installation)
 
-Works out of the box with any Chromium-based browser (**Brave, Chrome, Edge, Vivaldi, Arc**):
-
-1. **Download the Extension:**
-   * **[Click here to Download the ZIP](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** *(or click the green **Code** button at the top and select **Download ZIP**)*.
-   * *(Alternatively via Git: `git clone https://github.com/SyK112/autotab.git`)*
-
-2. **Extract the ZIP:**
-   * Right-click the downloaded ZIP file and extract it into a folder (e.g., `autotab`).
-
-3. **Open Extensions Manager in your browser:**
-   * **Brave:** `brave://extensions`
-   * **Chrome:** `chrome://extensions`
-   * **Edge:** `edge://extensions`
-
-4. **Enable Developer Mode:**
-   * Turn on the **Developer mode** toggle in the top-right corner.
-
-5. **Load the Extension:**
-   * Click the **Load unpacked** (Paketlenmemiş öğe yükle) button in the top-left corner.
-   * Select the **extracted folder** from Step 2 *(do not select the ZIP file itself or your entire Downloads folder)*.
-
-*Done! AutoTab is immediately active and organizing your tabs in real time.*
+1. **Chrome Web Store:** [Install AutoTab directly from the Chrome Web Store](https://chromewebstore.google.com/detail/autotab-automated-tab-gro/bcojmikhhechoghnkjlmkobigabibfnp).
+2. **Manual / Developer Installation (30 Seconds):**
+   * **[Download the Repository ZIP](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** and extract it to a folder.
+   * Open `chrome://extensions` (or `brave://extensions` / `edge://extensions`).
+   * Enable **Developer mode** in the top-right corner.
+   * Click **Load unpacked** and select the extracted folder.
 
 ---
 
@@ -89,117 +80,83 @@ Works out of the box with any Chromium-based browser (**Brave, Chrome, Edge, Viv
 
 ```text
 autotab/
-├── manifest.json       # Manifest V3 configuration & permissions
-├── background.js       # Core event-driven service worker & grouping engine
-├── popup.html          # Clean, modern toggle & quick action interface
-├── popup.css           # Adaptive dark/light theme stylesheet
-├── popup.js            # Settings handler & message bridge
+├── manifest.json       # Manifest V3 configuration (v2.0.0)
+├── background.js       # Auto-grouping engine, Chunked Sync Vault, Active Tab Guard & Anti-Refresh Shield
+├── popup.html          # Bilingual quick-control popup & live Anti-Refresh counter
+├── popup.css           # Adaptive dark/light popup stylesheet
+├── popup.js            # Popup controller & i18n engine (TR / EN)
+├── dashboard.html      # Tab Vault dashboard, Anti-Refresh domain manager & What's New v2.0 modal
+├── dashboard.css       # Responsive dark/light dashboard & modal stylesheet
+├── dashboard.js        # Vault management, sorting, search, JSON backup & What's New logic
+├── _locales/           # Chrome Web Store localization (tr, en)
 ├── icons/              # Extension icons (16px, 48px, 128px)
-├── .gitignore          # Git exclusion rules
+├── CHANGELOG.md        # Detailed v2.0.0 release notes ("What's New / Neler Yeni?")
+├── PRIVACY.md          # Transparent privacy policy
 ├── LICENSE             # MIT License
 └── README.md           # Documentation
 ```
 
 ---
 
-### 🗺️ Roadmap & Contributing
-
-We welcome community feedback, feature requests, and pull requests!
-
-- [ ] **Domain Whitelist / Blacklist:** Configurable list of sites that should never be grouped.
-- [ ] **Custom Group Names:** Ability to assign custom alias labels to specific domains or local IP addresses.
-- [ ] **Auto-Collapse Option:** Toggle to automatically collapse inactive groups to maximize tab strip space.
-- [ ] **Keyboard Shortcuts:** Configurable hotkeys for instant grouping or ungrouping.
-
-To contribute:
-1. Fork the Project.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your Changes (`git commit -m 'feat: add amazing feature'`).
-4. Push to the Branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
-
----
-
-<br/><br/>
+<br/>
 
 <h2 id="turkce">🇹🇷 Türkçe Dokümantasyon</h2>
 
-### 💡 Neden AutoTab?
+### 🚀 AutoTab v2.0 Neden Çok Büyük Bir Boşluğu Dolduruyor?
 
-Chrome Web Store'daki birçok sekme düzenleyici eklenti **"Otomatik Gruplama"** vaat etse de, pratikte:
-1. Her seferinde manuel bir **"Otomatik Grupla" butonuna basmanızı** şart koşarlar.
-2. Tek başına duran sekmelere dahi grup başlığı açarak sekme çubuğunu doldururlar.
-3. Çoklu sekmeler kapatılıp geriye tek sekme kaldığında, grup başlığı sekme çubuğunda kalmaya devam eder ve yeri işgal eder.
-4. Temel arka plan otomasyonunu ve kuralları ücretli **"Pro" aboneliklerin** arkasına saklarlar.
+Tarayıcıda sekme karmaşasını çözmek isteyen kullanıcılar bugüne kadar üç ayrı eklenti kurmak zorunda kalıyordu: sekmeleri gruplamak için bir eklenti, açık sekmeleri kaydedip RAM boşaltmak için ikinci bir eklenti (OneTab vb.) ve haber sitelerinin reklam göstermek için sayfayı kendi kendine yenilemesini durdurmak için üçüncü bir eklenti. Üstelik bu eklentilerin çoğu temel özellikleri ücretli "Pro" abonelik arkasına gizliyor, sekmeleri kapatırken **yazmakta olduğunuz mesajları siliyor** veya her kaydetmede dağınık listeler oluşturuyordu.
 
-**AutoTab bu sorunları tamamen çözer:** Hiçbir butona basmanıza gerek kalmadan, tamamen arka planda çalışır. Aynı siteden ikinci sekme açıldığı an ikisini birleştirir. Sekmeler kapatılıp tek sekme kaldığında ise grup başlığını kendiliğinden dağıtır.
+**AutoTab v2.0, bu üç temel ihtiyacı sıfır harici kütüphaneyle `< 40 KB` boyutunda tek bir çatı altında birleştirir:**
+
+1. **⚡ Sıfır Tıklamayla Otomatik Gruplama (2+ Kuralı & Otomatik Çözülme):** Aynı siteden 2. sekme açıldığı salisede arka planda otomatik gruplar; sekmeler kapanıp 1 sekme kaldığında grup başlığını kendiliğinden çözer.
+2. **🗄️ Bulut Eşitlemeli Sekme Kasası (OneTab+):** Açık sekmelerinizi tek tıkla kasaya kaldırıp tarayıcı belleğini (RAM) anında ferahlatın. Parçalı Bulut Motoru (`chrome.storage.sync`) sayesinde ek bir hesap açmadan, doğrudan tarayıcı profiliniz üzerinden tüm bilgisayarlarınız arasında otomatik eşitlenir.
+3. **🛡️ Akıllı Aktif Sekme Koruması (`< 120ms` Veri Kaybı Önleyici):** Sekmeleri kasaya kaldırırken açık sayfaları paralel olarak analiz eder; **içinde yarım kalan bir mesaj/form yazısı olan** veya **video/müzik oynatan** sekmeleri tespit eder. Bu sekmelerin yedeğini yine kasaya alır ancak **tarayıcıda kapatmadan açık bırakır**!
+4. **🚫 4 Katmanlı Oto-Yenileme & Başa Dönme Kalkanı (Anti-Refresh & Scroll Lock):** Özellikle haber sitelerinin reklam gösterimini artırmak için sayfayı kendi kendine yenileyip okuduğunuz haber başlığından sizi en tepeye fırlatmasını engeller. `<meta http-equiv="refresh">`, sekme odak tuzakları (`visibilitychange`), zamanlayıcılar (`setTimeout`/`setInterval`) ve `Navigation API` yenilemelerini durdurur; kaydırma konumunuzu (`Scroll Lock`) kilitler ve engellenen girişimleri canlı olarak sayar.
 
 #### 📊 Karşılaştırma Tablosu
 
-| Özellik | 🗂️ AutoTab | 📦 Tipik Eklentiler (Tabbiy vb.) |
+| Özellik | 🗂️ AutoTab v2.0 | 📦 Tipik Eklentiler (OneTab / Tabbiy vb.) |
 | :--- | :---: | :---: |
-| **Sıfır Buton Etkileşimi** | **✅ %100 Arka Planda (Anında)** | ❌ Her defasında butona basma zorunluluğu |
-| **Temiz Sekme Çubuğu (2+ Kuralı)** | **✅ Sadece 2+ sekme olunca gruplar** | ❌ Tek sekmelere dahi grup başlığı açar |
-| **Anında Kendiliğinden Çözülme** | **✅ 1 sekme kalınca grubu dağıtır** | ❌ Boş / tekil grup başlıkları asılı kalır |
-| **Sabitlenmiş (Pin) Sekme Koruması** | **✅ Pinli sekmelere asla dokunmaz** | ⚠️ Sabit sekmeleri bozabilir veya kaydırabilir |
-| **Site Yönlendirme Koruması** | **✅ Sekme site değiştirirse gruptan çıkar** | ❌ Yanlış grubun içinde kalmaya devam eder |
-| **Boyut ve Bellek Tüketimi** | **✅ < 20 KB (Sıfır kütüphane/framework)** | ⚠️ 500 KB - 5 MB (Ağır paketler) |
-| **Gizlilik ve Telemetri** | **✅ %100 Yerel (Sıfır veri takibi)** | ⚠️ Analitik ve sunucu senkronizasyonu |
-| **Fiyatlandırma** | **✅ Ücretsiz & Açık Kaynak (MIT)** | ❌ Ücretli aylık/yıllık Pro üyelikler |
+| **Sıfır Butonla Otomatik Gruplama** | **✅ %100 Arka Planda (Anında)** | ❌ Her seferinde butona basma zorunluluğu |
+| **Temiz Sekme Çubuğu (2+ Kuralı)** | **✅ 2+ sekmede gruplar, 1 sekmede çözer** | ❌ Tek sekmelere bile grup başlığı açar |
+| **Sekme Kasası & Cihazlar Arası Eşitleme** | **✅ Dahili Parçalı `storage.sync` Motoru** | ⚠️ Sadece yerel veya ücretli hesap şartı |
+| **Akıllı Grup Birleştirme & Tekilleştirme** | **✅ Mevcut gruba ekler, sadece tarihi günceller** | ❌ Her kayıtta mükerrer liste yığını oluşturur |
+| **Yarım Kalan Yazı & Medya Koruması** | **✅ Yedekler ve sekmeyi kapatmadan korur** | ❌ Sekmeyi kapatıp yazılan metni yok eder |
+| **Oto-Yenileme & Başa Dönme Kalkanı** | **✅ 4 Katmanlı Kalkan + Canlı Sayaç** | ❌ Bulunmuyor |
+| **Boyut ve Kütüphane Yükü** | **✅ < 40 KB (Saf JavaScript)** | ⚠️ 1 MB – 10 MB ağır paketler |
+| **Gizlilik ve Fiyatlandırma** | **✅ %100 Yerel/Profil Eşitleme • MIT Ücretsiz** | ❌ Telemetri takibi ve aylık abonelikler |
 
 ---
 
-### ✨ Çalışma Prensipleri
+### ✨ Öne Çıkan Özellikler
 
-- **⚡ Olay Tabanlı Arka Plan Motoru:** Manifest V3 Service Worker altyapısı ile çalışır. `chrome.tabs.onUpdated` ve `chrome.tabs.onCreated` olaylarını arka planda sessizce dinler.
-- **🛡️ 300ms Akıllı Kuyruk (Debounce):** Arka arkaya sekmeler açarken veya yönlendirmelerde sekme çubuğunda zıplama ve donma yaşanmasını engeller.
-- **🎯 Akıllı Kök Alan Adı (Root Domain) Tespiti:** Çok parçalı alan adlarını dahi hatasız tanır (`mail.google.com` ➔ `Google`, `unsan.com.tr` ➔ `Unsan`, `bbc.co.uk` ➔ `BBC`).
-- **📌 Sabit Sekme Dokunulmazlığı:** Pinlenmiş sekmeler en solda güvende kalır. Gruptaki bir sekme sonradan sabitlenirse derhal gruptan çıkarılır.
-- **🎨 Deterministik Renk Eşleme:** Matematiksel dize özetleme (hash) algoritması sayesinde her alan adı daima aynı sabit rengi alır (YouTube daima Kırmızı, GitHub Mor, Google Mavi vb.).
-
----
-
-### 🚀 Hızlı Kurulum (30 Saniyede)
-
-Tüm Chromium tabanlı tarayıcılarda (**Brave, Google Chrome, Microsoft Edge, Vivaldi, Arc**) doğrudan çalışır:
-
-1. **Eklentiyi İndirin:**
-   * **[ZIP Dosyasını Doğrudan İndirin](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** *(veya sayfanın üstündeki yeşil **Code** butonuna basıp **Download ZIP** deyin)*.
-   * *(Alternatif olarak Git ile: `git clone https://github.com/SyK112/autotab.git`)*
-
-2. **ZIP Dosyasını Klasöre Çıkartın:**
-   * İndirdiğiniz ZIP dosyasına sağ tıklayıp bir klasöre çıkartın (örn: `autotab`).
-
-3. **Tarayıcınızda Eklenti Yöneticisini Açın:**
-   * **Brave:** `brave://extensions`
-   * **Chrome:** `chrome://extensions`
-   * **Edge:** `edge://extensions`
-
-4. **Geliştirici Modunu Açın:**
-   * Sağ üst köşedeki **Geliştirici modu** (Developer mode) anahtarını açın.
-
-5. **Eklentiyi Yükleyin:**
-   * Sol üstte beliren **Paketlenmemiş öğe yükle** butonuna tıklayın.
-   * Daha önce **ZIP'ten çıkarttığınız klasörü seçin** *(ZIP dosyasının kendisini veya doğrudan İndirilenler klasörünüzü seçmeyin)*.
-
-*Tebrikler! AutoTab hemen çalışmaya başlayacak ve sekmelerinizi otomatik olarak düzenleyecektir.*
+- **🗄️ Akıllı Sekme Kasası (`dashboard.html`):**
+  - **Akıllı Alan Adı Birleştirme (Smart Merge):** Örneğin kasada `YouTube` grubunuz varken yeni sekmeleri kaydettiğinizde, yeni bir yığın açmak yerine doğrudan mevcut `YouTube` grubunuzun içine ekler.
+  - **Mükerrer Link Engelleme (Upsert):** Aynı link tekrar kaydedilirse kopya oluşturmaz; mevcut kaydın tarihini güncelleyip grubun en üstüne taşır.
+  - **Sol Tık ve Orta Tık (`Ctrl+Tık`) Ayrımı:** Kasadaki bir linke **Sol Tık** yaptığınızda sekmeyi açıp kasadan siler; **Orta Tık (Farenin Tekerleği)** veya `Ctrl+Tık` yaptığınızda ise sekmeyi arka planda açar ve **kasada tutmaya devam eder**.
+  - **Grup İçi 4'lü Sıralama & Onaylı Silme:** Grup içindeki linkleri *Yeniden Eskiye*, *Eskiden Yeniye*, *A ➔ Z* veya *Z ➔ A* sıralayabilir, tek tıkla JSON yedeği alabilirsiniz.
+- **🚫 4 Katmanlı Oto-Yenileme & Başa Dönme Kalkanı:**
+  - Eklenti menüsünden (Popup) bulunduğunuz site için şalteri açabilir veya Sekme Kasası ekranındaki yönetim çubuğundan (`ensonhaber.com` vb.) siteleri kolayca ekleyip çıkarabilirsiniz.
+  - Sayfa arka planda yenilenmeye çalıştığında sol altta kendi kendine kaybolan şık bir bildirim rozeti gösterir ve Popup menüsünde kaç yenileme girişiminin engellendiğini canlı olarak yazar.
+- **🎉 Sürüm İçi "Neler Yeni?" (What's New) Ekranı:**
+  - Güncelleme sonrasında ve üst bardaki **✨ v2.0 Neler Yeni?** butonuyla yeni özellikleri özetleyen kutlama penceresi sunar.
 
 ---
 
-### 🗺️ Yol Haritası ve Katkıda Bulunma
+### 🚀 Hızlı Kurulum
 
-Topluluk önerilerine ve geliştirmelere açığız:
-
-- [ ] **Beyaz Liste / Kara Liste (Whitelist/Blacklist):** Asla gruplanmasını istemediğiniz sitelerin listesi.
-- [ ] **Özel Grup İsimleri:** Belirli alan adları veya yerel IP'ler için özel grup etiketleri tanımlama.
-- [ ] **Otomatik Daraltma (Auto-Collapse):** Sekme çubuğunda yer kazanmak için aktif olmayan grupları otomatik daraltma.
-- [ ] **Klavye Kısayolları:** Anında gruplama veya çözme için kısayol tuşları.
+1. **Chrome Web Store:** [AutoTab'ı Chrome Web Store'dan Tek Tıkla Kurun](https://chromewebstore.google.com/detail/autotab-automated-tab-gro/bcojmikhhechoghnkjlmkobigabibfnp).
+2. **Geliştirici Modu ile Kurulum (30 Saniye):**
+   * **[ZIP Dosyasını İndirin](https://github.com/SyK112/autotab/archive/refs/heads/main.zip)** ve bir klasöre çıkartın.
+   * Tarayıcınızda `chrome://extensions` (veya `brave://extensions` / `edge://extensions`) adresini açın.
+   * Sağ üstten **Geliştirici modu** anahtarını açın.
+   * Sol üstteki **Paketlenmemiş öğe yükle** butonuna tıklayıp ZIP'ten çıkarttığınız klasörü seçin.
 
 ---
 
 ## 📄 License / Lisans
 
-Bu proje **MIT Lisansı** altında sunulmaktadır. Ayrıntılar için [`LICENSE`](LICENSE) belgesine göz atabilirsiniz.
+Bu proje **MIT Lisansı** altında tamamen ücretsiz ve açık kaynaklı olarak sunulmaktadır. Ayrıntılar için [`LICENSE`](LICENSE) ve [`PRIVACY.md`](PRIVACY.md) belgelerine göz atabilirsiniz.
 
 <div align="center">
   <sub>Crafted with precision by <a href="https://github.com/SyK112">Süleyman YK</a> and the open-source community.</sub>

@@ -15,7 +15,10 @@
         <span class="badge" id="headerBadge">Active</span>
       </div>
     </div>
-    <button id="langToggle" class="lang-btn" title="Switch Language / Dili Değiştir">TR</button>
+    <div class="header-right">
+      <button id="btnWhatsNewPopup" class="whatsnew-pill" title="v2.0 Neler Yeni? / What's New in v2.0">✨ v2.0</button>
+      <button id="langToggle" class="lang-btn" title="Switch Language / Dili Değiştir">TR</button>
+    </div>
   </div>
 
   <div class="card main-toggle-card">
@@ -40,15 +43,54 @@
     </div>
   </div>
 
-  <div class="actions">
+  <div class="actions actions-grid">
     <button id="btnGroupNow" class="btn btn-primary">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
       <span id="btnGroupNowText">Group Now</span>
     </button>
     <button id="btnUngroupNow" class="btn btn-secondary">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       <span id="btnUngroupNowText">Ungroup All</span>
     </button>
+  </div>
+
+  <div class="section-divider">
+    <span id="lblVaultSection">TAB VAULT & CLOUD SYNC</span>
+  </div>
+
+  <div class="actions vault-actions">
+    <button id="btnStashNow" class="btn btn-vault">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span id="btnStashNowText">Save & Close Tabs to Vault</span>
+    </button>
+    <button id="btnOpenVault" class="btn btn-secondary btn-vault-open">
+      <div class="btn-left-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <span id="btnOpenVaultText">Open Tab Vault</span>
+      </div>
+      <span id="vaultCountBadge" class="vault-badge">0</span>
+    </button>
+  </div>
+
+  <div class="section-divider">
+    <span id="lblAntiRefreshSection">ANTI-REFRESH & SCROLL GUARD</span>
+  </div>
+
+  <div class="card anti-refresh-card" id="antiRefreshCard">
+    <div class="ar-top-row">
+      <div class="toggle-info">
+        <span class="label-title" id="lblAntiRefresh">Block Auto-Refresh</span>
+        <span class="label-desc" id="antiRefreshDesc">Active site: —</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="antiRefreshEnabled">
+        <span class="slider slider-amber"></span>
+      </label>
+    </div>
+    <div class="ar-stats-bar" id="arStatsBar" style="display: none;">
+      <span class="ar-stats-text" id="arStatsText">🛡️ Engellenen yenileme girişimi</span>
+      <span class="ar-stats-count" id="arStatsCount">0</span>
+    </div>
   </div>
 
   <div class="footer">

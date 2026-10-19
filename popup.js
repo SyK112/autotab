@@ -1,4 +1,4 @@
-// AutoTab v1.2.0 - Popup Mantığı ve Çift Dil Desteği (i18n)
+// AutoTab v2.0.0 - Popup Mantığı, Sekme Kasası & Oto-Yenileme Engelleyici
 
 const translations = {
   tr: {
@@ -10,11 +10,22 @@ const translations = {
     infoRule1: 'Aynı siteden <strong>en az 2 sekme</strong> olduğunda otomatik gruplanır.',
     infoRule2: 'Tek sekme kaldığında grup kalabalık yapmadan <strong>kendiliğinden çözülür</strong>.',
     btnGroupNow: 'Şimdi Grupla',
-    btnUngroupNow: 'Tüm Grupları Dağıt',
+    btnUngroupNow: 'Grupları Dağıt',
+    lblVaultSection: 'SEKME KASASI & BULUT EŞİTLEME',
+    btnStashNow: 'Sekmeleri Kasaya Kaydet & Kapat',
+    btnOpenVault: 'Sekme Kasasını Aç',
+    lblAntiRefreshSection: 'OTO-YENİLEME & BAŞA DÖNME KALKANI',
+    lblAntiRefresh: 'Bu Sitede Yenilemeyi Engelle',
+    antiRefreshDomainFmt: (d, on) => on ? `${d} • Koruma Aktif` : `${d} • Koruma Kapalı`,
+    arStatsLabel: '🛡️ Bu sekmede engellenen yenileme',
+    antiRefreshUnsupported: 'Bu sekmede kullanılamaz',
+    whatsNewTitle: 'v2.0 Neler Yeni? (Tıkla & Gör)',
     toastActive: 'Otomasyon açıldı',
     toastInactive: 'Otomasyon durduruldu',
     toastGrouped: 'Tüm sekmeler gruplandı',
     toastUngrouped: 'Gruplar dağıtıldı',
+    toastAntiRefreshOn: (d) => `${d} için yenileme engellendi`,
+    toastAntiRefreshOff: (d) => `${d} için koruma kapatıldı`,
     nextLangBtn: 'EN',
     langTitle: 'Switch to English'
   },
@@ -28,10 +39,21 @@ const translations = {
     infoRule2: 'Disbands group automatically when only <strong>1 tab remains</strong>.',
     btnGroupNow: 'Group Now',
     btnUngroupNow: 'Ungroup All',
+    lblVaultSection: 'TAB VAULT & CLOUD SYNC',
+    btnStashNow: 'Save & Close Tabs to Vault',
+    btnOpenVault: 'Open Tab Vault',
+    lblAntiRefreshSection: 'ANTI-REFRESH & SCROLL GUARD',
+    lblAntiRefresh: 'Block Auto-Refresh on Site',
+    antiRefreshDomainFmt: (d, on) => on ? `${d} • Guard Active` : `${d} • Guard Off`,
+    arStatsLabel: '🛡️ Blocked refreshes on this tab',
+    antiRefreshUnsupported: 'Not available on this tab',
+    whatsNewTitle: "What's New in v2.0 (Click to View)",
     toastActive: 'Automation enabled',
     toastInactive: 'Automation disabled',
     toastGrouped: 'All tabs grouped',
     toastUngrouped: 'Groups disbanded',
+    toastAntiRefreshOn: (d) => `Auto-refresh blocked for ${d}`,
+    toastAntiRefreshOff: (d) => `Guard disabled for ${d}`,
     nextLangBtn: 'TR',
     langTitle: 'Türkçe diline geç'
   }
@@ -48,10 +70,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   const btnGroupNowText = document.getElementById('btnGroupNowText');
   const btnUngroupNow = document.getElementById('btnUngroupNow');
   const btnUngroupNowText = document.getElementById('btnUngroupNowText');
+  const lblVaultSection = document.getElementById('lblVaultSection');
+  const btnStashNow = document.getElementById('btnStashNow');
+  const btnStashNowText = document.getElementById('btnStashNowText');
+  const btnOpenVault = document.getElementById('btnOpenVault');
+  const btnOpenVaultText = document.getElementById('btnOpenVaultText');
+  const vaultCountBadge = document.getElementById('vaultCountBadge');
+  const lblAntiRefreshSection = document.getElementById('lblAntiRefreshSection');
+  const lblAntiRefresh = document.getElementById('lblAntiRefresh');
+  const antiRefreshDesc = document.getElementById('antiRefreshDesc');
+  const antiRefreshEnabled = document.getElementById('antiRefreshEnabled');
+  const arStatsBar = document.getElementById('arStatsBar');
+  const arStatsText = document.getElementById('arStatsText');
+  const arStatsCount = document.getElementById('arStatsCount');
+  const btnWhatsNewPopup = document.getElementById('btnWhatsNewPopup');
   const langToggle = document.getElementById('langToggle');
   const toastMsg = document.getElementById('toastMsg');
 
-  // 1. Dil Belirleme (Kayıtlı tercih -> Tarayıcı dili -> Varsayılan İngilizce)
+  let activeDomain = null;
+  let activeBlockedCount = 0;
+
   const stored = await chrome.storage.local.get({
     autoGroupEnabled: true,
     userLang: 'auto'
@@ -68,7 +106,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     toastMsg.classList.add('show');
     setTimeout(() => {
       toastMsg.classList.remove('show');
-    }, 1500);
+    }, 1600);
+  }
+
+  function updateAntiRefreshUI() {
+    const t = translations[currentLang] || translations.en;
+    arStatsText.textContent = t.arStatsLabel;
+
+    if (!activeDomain) {
+      antiRefreshEnabled.disabled = true;
+      antiRefreshEnabled.checked = false;
+      antiRefreshDesc.textContent = t.antiRefreshUnsupported;
+      arStatsBar.style.display = 'none';
+    } else {
+      antiRefreshEnabled.disabled = false;
+      const isOn = antiRefreshEnabled.checked;
+      antiRefreshDesc.textContent = t.antiRefreshDomainFmt(activeDomain, isOn);
+      if (isOn) {
+        arStatsBar.style.display = 'flex';
+        arStatsCount.textContent = String(activeBlockedCount);
+      } else {
+        arStatsBar.style.display = 'none';
+      }
+    }
   }
 
   function applyLanguage(lang) {
@@ -78,10 +138,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     infoRule2.innerHTML = t.infoRule2;
     btnGroupNowText.textContent = t.btnGroupNow;
     btnUngroupNowText.textContent = t.btnUngroupNow;
+    lblVaultSection.textContent = t.lblVaultSection;
+    btnStashNowText.textContent = t.btnStashNow;
+    btnOpenVaultText.textContent = t.btnOpenVault;
+    lblAntiRefreshSection.textContent = t.lblAntiRefreshSection;
+    lblAntiRefresh.textContent = t.lblAntiRefresh;
+    btnWhatsNewPopup.title = t.whatsNewTitle;
     langToggle.textContent = t.nextLangBtn;
     langToggle.title = t.langTitle;
 
     updateStatusUI(autoGroupEnabled.checked);
+    updateAntiRefreshUI();
   }
 
   function updateStatusUI(isActive) {
@@ -97,11 +164,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // İlk yükleme
+  function refreshVaultAndAntiRefresh() {
+    chrome.runtime.sendMessage({ action: 'getVaultData' }, (res) => {
+      if (res && Array.isArray(res.groups)) {
+        const totalTabs = res.groups.reduce((acc, g) => acc + (g.items ? g.items.length : 0), 0);
+        vaultCountBadge.textContent = totalTabs;
+      }
+    });
+
+    chrome.runtime.sendMessage({ action: 'getAntiRefreshStatus' }, (res) => {
+      if (res && res.success) {
+        activeDomain = res.domain || null;
+        antiRefreshEnabled.checked = Boolean(res.enabled);
+        activeBlockedCount = res.blockedCount || 0;
+      } else {
+        activeDomain = null;
+        activeBlockedCount = 0;
+      }
+      updateAntiRefreshUI();
+    });
+  }
+
   autoGroupEnabled.checked = stored.autoGroupEnabled;
   applyLanguage(currentLang);
+  refreshVaultAndAntiRefresh();
 
-  // Dil Değiştirme Butonu (TR <-> EN)
+  btnWhatsNewPopup.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'openDashboard', showWhatsNew: true }, () => {
+      window.close();
+    });
+  });
+
   langToggle.addEventListener('click', async () => {
     currentLang = currentLang === 'tr' ? 'en' : 'tr';
     await chrome.storage.local.set({ userLang: currentLang });
@@ -109,7 +202,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     showToast(currentLang === 'tr' ? 'Dil: Türkçe' : 'Language: English');
   });
 
-  // Otomatik Gruplama Aç / Kapa
   autoGroupEnabled.addEventListener('change', async () => {
     const isEnabled = autoGroupEnabled.checked;
     updateStatusUI(isEnabled);
@@ -121,7 +213,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.runtime.sendMessage({ action: 'settingsChanged' });
   });
 
-  // Şimdi Grupla
+  antiRefreshEnabled.addEventListener('change', () => {
+    if (!activeDomain) return;
+    const isEnabled = antiRefreshEnabled.checked;
+    chrome.runtime.sendMessage({
+      action: 'toggleAntiRefreshDomain',
+      domain: activeDomain,
+      enabled: isEnabled
+    }, () => {
+      updateAntiRefreshUI();
+      const t = translations[currentLang] || translations.en;
+      showToast(isEnabled ? t.toastAntiRefreshOn(activeDomain) : t.toastAntiRefreshOff(activeDomain));
+    });
+  });
+
   btnGroupNow.addEventListener('click', async () => {
     btnGroupNow.disabled = true;
     btnGroupNow.style.opacity = '0.7';
@@ -133,7 +238,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
-  // Tüm Grupları Dağıt
   btnUngroupNow.addEventListener('click', async () => {
     btnUngroupNow.disabled = true;
     btnUngroupNow.style.opacity = '0.7';
@@ -142,6 +246,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       showToast(t.toastUngrouped);
       btnUngroupNow.disabled = false;
       btnUngroupNow.style.opacity = '1';
+    });
+  });
+
+  btnStashNow.addEventListener('click', () => {
+    btnStashNow.disabled = true;
+    btnStashNow.style.opacity = '0.7';
+    chrome.runtime.sendMessage({ action: 'stashTabsNow' }, () => {
+      window.close();
+    });
+  });
+
+  btnOpenVault.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'openDashboard' }, () => {
+      window.close();
     });
   });
 });

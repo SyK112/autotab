@@ -1,14 +1,14 @@
 {
   "appName": {
-    "message": "AutoTab - Automated Tab Grouper",
+    "message": "AutoTab - Tab Grouper, Tab Vault & Anti-Refresh Shield",
     "description": "The name of the extension."
   },
   "appDesc": {
-    "message": "Automatically groups tabs by domain in real time. Zero clicks, clean tab bar, lightweight and open-source.",
+    "message": "Auto-groups tabs by domain, stashes tabs to Cloud Vault (OneTab+) with active text guard, and blocks forced page auto-refreshes.",
     "description": "The description of the extension."
   },
   "actionTitle": {
-    "message": "AutoTab",
+    "message": "AutoTab v2.0",
     "description": "Tooltip for the extension icon."
   }
 }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoTab - Sekme Kasası</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand-area">
+        <img src="icons/icon48.png" alt="AutoTab" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 id="pageTitle">AutoTab Sekme Kasası</h1>
+            <button id="btnWhatsNew" class="version-pill version-pill-btn" title="v2.0 Sürüm Notları / Neler Yeni?">
+              ✨ <span id="lblWhatsNewBtn">v2.0 Neler Yeni?</span>
+            </button>
+          </div>
+          <div class="sync-status" id="syncStatusText">
+            <span class="sync-dot"></span>
+            <span id="quotaSummary">Bulut Eşitleme Aktif • 0 Grup, 0 Sekme (%0.0 Kota)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-area">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Sekme veya site ara..." autocomplete="off">
+        </div>
+
+        <div class="sort-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
+          <select id="sortSelect" title="Grup İçi Link Sıralaması">
+            <option value="newest" id="optNewest">Sırala: Yeniden Eskiye</option>
+            <option value="oldest" id="optOldest">Sırala: Eskiden Yeniye</option>
+            <option value="az" id="optAz">Sırala: Alfabetik (A ➔ Z)</option>
+            <option value="za" id="optZa">Sırala: Alfabetik (Z ➔ A)</option>
+          </select>
+        </div>
+
+        <div class="toolbar-btns">
+          <button id="btnExport" class="btn-tool" title="JSON Yedeği İndir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="lblExport">Yedekle</span>
+          </button>
+          <button id="btnImport" class="btn-tool" title="JSON Yedeği Yükle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="lblImport">İçe Aktar</span>
+          </button>
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+          <button id="btnClearAll" class="btn-tool btn-danger-outline" title="Tüm Kasayı Temizle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span id="lblClearAll">Tümünü Sil</span>
+          </button>
+          <button id="langToggle" class="btn-tool lang-switch">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hint-banner">
+      <div class="hint-item">
+        <span class="hint-badge badge-left">Sol Tık</span>
+        <span id="hintLeftText">Sekmeyi açar ve kasadan <strong>siler</strong>.</span>
+      </div>
+      <div class="hint-item">
+        <span class="hint-badge badge-mid">Orta Tık / Ctrl+Tık</span>
+        <span id="hintMidText">Arka planda açar ve kasada <strong>tutar</strong>.</span>
+      </div>
+      <div class="hint-item">
+        <span class="hint-badge badge-merge">Akıllı Koruma</span>
+        <span id="hintMergeText">Metin veya medya içeren aktif sekmelerin <strong>kapanması önlenir</strong>.</span>
+      </div>
+    </div>
+
+    <!-- Faz 2: Oto-Yenileme & Başa Dönme Kalkanı Yönetim Çubuğu -->
+    <div class="anti-refresh-panel">
+      <div class="ar-panel-header">
+        <div class="ar-panel-title-wrap">
+          <span class="ar-badge" id="arBadgeLabel">Oto-Yenileme Kalkanı</span>
+          <span class="ar-panel-desc" id="arPanelDesc">Kendi kendine sayfa yenileyip başa dönen siteler (haber siteleri vb.) engellenir ve kaydırma konumunuz kilitlenir:</span>
+        </div>
+        <div class="ar-add-form">
+          <input type="text" id="arDomainInput" placeholder="Site ekle (örn: ensonhaber.com)" autocomplete="off">
+          <button id="btnAddArDomain" class="btn-ar-add">+ Ekle</button>
+        </div>
+      </div>
+      <div id="arDomainsList" class="ar-domains-list"></div>
+    </div>
+
+    <div id="groupsContainer" class="groups-grid"></div>
+
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-icon">🗂️</div>
+      <h2 id="emptyTitle">Kasanızda henüz kayıtlı sekme yok</h2>
+      <p id="emptyDesc">Tarayıcı sağ üstündeki AutoTab simgesine tıklayıp "Sekmeleri Kasaya Kaydet & Kapat" butonunu kullanarak açık sekmelerinizi buraya güvenle aktarabilirsiniz.</p>
+    </div>
+  </main>
+
+  <!-- v2.0.0 Neler Yeni? (What's New) Kutlama Modalı -->
+  <div id="whatsNewModal" class="wn-backdrop" style="display: none;">
+    <div class="wn-modal" role="dialog" aria-modal="true">
+      <button id="btnCloseWhatsNewX" class="wn-close-x" title="Kapat / Close">&times;</button>
+      <div class="wn-hero">
+        <span class="wn-hero-badge" id="wnHeroBadge">BÜYÜK GÜNCELLEME • SÜRÜM 2.0</span>
+        <h2 id="wnTitle">🚀 AutoTab v2.0: Neler Yeni?</h2>
+        <p id="wnSubtitle">AutoTab artık yalnızca sekmeleri gruplayan bir araç değil; tarayıcı belleğinizi kurtaran, yarım kalan yazılarınızı koruyan ve kendi kendine yenilenen siteleri durduran eksiksiz bir komuta merkezi!</p>
+      </div>
+
+      <div class="wn-grid">
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-emerald">🗄️</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat1Title">Sekme Kasası & Bulut Eşitleme (OneTab+)</h3>
+            <p id="wnFeat1Desc">Açık sekmelerinizi tek tıkla kasaya kaldırıp RAM'i boşaltın. Parçalı Bulut Motoru (chrome.storage.sync) ile verileriniz ek hesap açmadan tüm bilgisayarlarınız arasında otomatik eşitlenir.</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-purple">🛡️</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat2Title">Akıllı Aktif Sekme Koruması</h3>
+            <p id="wnFeat2Desc">Sekmeleri kasaya kaydederken yarım bıraktığınız bir mesaj, doldurduğunuz bir form veya çalan bir video/müzik varsa sekmeyi kapatmadan atlar; yine de yedeğini kasaya alır!</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-amber">🚫</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat3Title">4 Katmanlı Oto-Yenileme & Başa Dönme Kalkanı</h3>
+            <p id="wnFeat3Desc">Haber sitelerinin reklam göstermek için sayfayı kendi kendine yenileyip sizi en tepeye atmasını engeller. Kaydırma konumunuzu kilitler ve engellenen girişimleri canlı sayar.</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-blue">⚡</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat4Title">Akıllı Grup Birleştirme, Orta Tık & Sıralama</h3>
+            <p id="wnFeat4Desc">Aynı sitenin yeni sekmeleri mevcut kasa grubuna eklenir, mükerrer linklerin sadece tarihi güncellenir. Sol tık açıp siler; Orta Tık (veya Ctrl+Tık) kasada tutarak arka planda açar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wn-footer">
+        <span class="wn-footer-note" id="wnFooterNote">⚡ Sıfır harici kütüphane • %100 Yerel & Gizlilik Odaklı • &lt; 40 KB</span>
+        <button id="btnCloseWhatsNew" class="wn-btn-primary">Harika, Keşfetmeye Başla! 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastBanner" class="toast-banner">İşlem tamamlandı</div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
