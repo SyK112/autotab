@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoTab - Sekme Kasası</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand-area">
+        <img src="icons/icon48.png" alt="AutoTab" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 id="pageTitle">AutoTab Sekme Kasası</h1>
+            <button id="btnWhatsNew" class="version-pill version-pill-btn" title="v2.1 Sürüm Notları / Neler Yeni?">
+              ✨ <span id="lblWhatsNewBtn">v2.1 Neler Yeni?</span>
+            </button>
+          </div>
+          <div class="sync-status" id="syncStatusText">
+            <span class="sync-dot" id="syncStatusDot"></span>
+            <span id="quotaSummary">💾 Yerel &amp; Profil Hafızası Aktif • 0 Grup, 0 Sekme (%0.0 Kota)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-area">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Sekme veya site ara..." autocomplete="off">
+        </div>
+
+        <!-- Modül C: Sekme Sayaçlı Ajanda ve Tarihe Göre Filtreleme Sistemi -->
+        <div class="date-agenda-wrap" id="dateAgendaWrap">
+          <button id="btnDateAgenda" class="btn-tool btn-agenda" type="button">
+            <span class="agenda-icon">📅</span>
+            <span id="lblDateAgenda">Tarih: Tümü</span>
+            <span class="agenda-caret">▾</span>
+          </button>
+
+          <div id="dateAgendaPopover" class="agenda-popover" style="display: none;">
+            <div class="agenda-quick-chips" id="agendaQuickChips">
+              <button type="button" class="agenda-chip active" data-filter="all" id="chipAll">Tümü (0)</button>
+              <button type="button" class="agenda-chip" data-filter="today" id="chipToday">Bugün (0)</button>
+              <button type="button" class="agenda-chip" data-filter="yesterday" id="chipYesterday">Dün (0)</button>
+              <button type="button" class="agenda-chip" data-filter="last7" id="chipLast7">Son 7 Gün (0)</button>
+            </div>
+
+            <div class="agenda-cal-header">
+              <button type="button" id="btnPrevMonth" class="agenda-nav-btn" title="Önceki Ay / Previous Month">&#8249;</button>
+              <span id="agendaMonthLabel" class="agenda-month-label">Ekim 2026</span>
+              <button type="button" id="btnNextMonth" class="agenda-nav-btn" title="Sonraki Ay / Next Month">&#8250;</button>
+            </div>
+
+            <div class="agenda-weekdays" id="agendaWeekdays">
+              <span>Pzt</span><span>Sal</span><span>Çar</span><span>Per</span><span>Cum</span><span>Cmt</span><span>Paz</span>
+            </div>
+
+            <div class="agenda-calendar-grid" id="agendaCalendarGrid"></div>
+          </div>
+        </div>
+
+        <div class="sort-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
+          <select id="sortSelect" title="Grup İçi Link Sıralaması">
+            <option value="newest" id="optNewest">Sırala: Yeniden Eskiye</option>
+            <option value="oldest" id="optOldest">Sırala: Eskiden Yeniye</option>
+            <option value="az" id="optAz">Sırala: Alfabetik (A ➔ Z)</option>
+            <option value="za" id="optZa">Sırala: Alfabetik (Z ➔ A)</option>
+          </select>
+        </div>
+
+        <div class="toolbar-btns">
+          <!-- Modül A: Hibrit Google Drive Eşitlemesi Butonu -->
+          <button id="btnGDriveSync" class="btn-tool btn-gdrive" title="Google Drive Bulut Eşitlemesi">
+            <span>☁️</span>
+            <span id="lblGDriveBtn">Google Drive Eşitlemesi</span>
+          </button>
+
+          <button id="btnExport" class="btn-tool" title="JSON Yedeği İndir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="lblExport">Yedekle</span>
+          </button>
+          <button id="btnImport" class="btn-tool" title="JSON Yedeği Yükle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="lblImport">İçe Aktar</span>
+          </button>
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+          <button id="btnClearAll" class="btn-tool btn-danger-outline" title="Tüm Kasayı Temizle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span id="lblClearAll">Tümünü Sil</span>
+          </button>
+          <button id="langToggle" class="btn-tool lang-switch">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hint-banner">
+      <div class="hint-item">
+        <span class="hint-badge badge-left">Sol Tık</span>
+        <span id="hintLeftText">Sekmeyi açar ve kasadan <strong>siler</strong>.</span>
+      </div>
+      <div class="hint-item">
+        <span class="hint-badge badge-mid">Orta Tık / Ctrl+Tık</span>
+        <span id="hintMidText">Arka planda açar ve kasada <strong>tutar</strong>.</span>
+      </div>
+      <div class="hint-item">
+        <span class="hint-badge badge-merge">Akıllı Koruma</span>
+        <span id="hintMergeText">Metin veya medya içeren aktif sekmelerin <strong>kapanması önlenir</strong>.</span>
+      </div>
+    </div>
+
+    <!-- Faz 2: Oto-Yenileme & Başa Dönme Kalkanı Yönetim Çubuğu -->
+    <div class="anti-refresh-panel">
+      <div class="ar-panel-header">
+        <div class="ar-panel-title-wrap">
+          <span class="ar-badge" id="arBadgeLabel">Oto-Yenileme Kalkanı</span>
+          <span class="ar-panel-desc" id="arPanelDesc">Kendi kendine sayfa yenileyip başa dönen siteler (haber siteleri vb.) engellenir ve kaydırma konumunuz kilitlenir:</span>
+        </div>
+        <div class="ar-add-form">
+          <input type="text" id="arDomainInput" placeholder="Site ekle (örn: ensonhaber.com)" autocomplete="off">
+          <button id="btnAddArDomain" class="btn-ar-add">+ Ekle</button>
+        </div>
+      </div>
+      <div id="arDomainsList" class="ar-domains-list"></div>
+    </div>
+
+    <!-- Aktif Tarih / Arama Filtresi Bilgi Şeridi -->
+    <div id="activeFilterStrip" class="active-filter-strip" style="display: none;">
+      <span id="activeFilterText">📅 Seçili filtre uygulanıyor</span>
+      <button type="button" id="btnResetFilters" class="btn-reset-filter">Filtreyi Temizle &times;</button>
+    </div>
+
+    <div id="groupsContainer" class="groups-grid"></div>
+
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-icon">🗂️</div>
+      <h2 id="emptyTitle">Kasanızda henüz kayıtlı sekme yok</h2>
+      <p id="emptyDesc">Tarayıcı sağ üstündeki AutoTab simgesine tıklayıp "Sekmeleri Kasaya Kaydet & Kapat" butonunu kullanarak açık sekmelerinizi buraya güvenle aktarabilirsiniz.</p>
+    </div>
+  </main>
+
+  <!-- Modül A: Hibrit Google Drive Bulut Eşitlemesi Modalı (Sıfır Ayar, Doğrudan Bağlantı) -->
+  <div id="gdriveModal" class="wn-backdrop" style="display: none;">
+    <div class="wn-modal gdrive-modal" role="dialog" aria-modal="true">
+      <button id="btnCloseGDriveX" class="wn-close-x" title="Kapat / Close">&times;</button>
+      <div class="wn-hero gdrive-hero">
+        <span class="wn-hero-badge" id="gdHeroBadge">KADEMELİ DEPOLAMA • GOOGLE DRIVE</span>
+        <h2 id="gdTitle">☁️ Google Drive Bulut Eşitlemesi</h2>
+        <p id="gdSubtitle">Brave, Chrome, Edge ve Vivaldi gibi farklı Chromium tarayıcılar arasında 100 KB sınırına takılmadan kendi Google Drive alanınız üzerinden kasa verilerinizi canlı eşitleyin.</p>
+      </div>
+
+      <div class="gd-status-box" id="gdStatusBox">
+        <div class="gd-status-left">
+          <span class="gd-status-dot" id="gdStatusDot"></span>
+          <div>
+            <div class="gd-status-title" id="gdStatusTitle">Varsayılan Katman: Yerel &amp; Profil Hafızası</div>
+            <div class="gd-status-desc" id="gdStatusDesc">Google Drive henüz bağlanmadı. Verileriniz yerel diskte ve tarayıcı profilinde saklanıyor.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gd-actions-footer">
+        <div class="gd-left-actions">
+          <button type="button" id="btnGDriveDisconnect" class="btn-tool btn-danger-outline" style="display: none;">Bağlantıyı Kes</button>
+        </div>
+        <div class="gd-right-actions">
+          <button type="button" id="btnGDriveSyncNow" class=" wn-btn-primary" style="display: none;">🔄 Şimdi Eşitle</button>
+          <button type="button" id="btnGDriveConnect" class="wn-btn-primary">☁️ Google Drive ile Bağlan &amp; Eşitle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- v2.1.0 Neler Yeni? (What's New) Kutlama Modalı -->
+  <div id="whatsNewModal" class="wn-backdrop" style="display: none;">
+    <div class="wn-modal" role="dialog" aria-modal="true">
+      <button id="btnCloseWhatsNewX" class="wn-close-x" title="Kapat / Close">&times;</button>
+      <div class="wn-hero">
+        <span class="wn-hero-badge" id="wnHeroBadge">YENİ GÜNCELLEME • SÜRÜM 2.1</span>
+        <h2 id="wnTitle">🚀 AutoTab v2.1: Neler Yeni?</h2>
+        <p id="wnSubtitle">AutoTab v2.1; Sekme Sayaçlı Tarih Ajandası, Akordeon Grup Modu, Ayrılırken Başa Taşıma, Canlı Araç Çubuğu Rozeti ve Hibrit Google Drive Eşitlemesi ile çok daha akıllı!</p>
+      </div>
+
+      <div class="wn-grid">
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-emerald">📅</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat1Title">Sekme Sayaçlı Tarih Ajandası &amp; Güvenli Filtre</h3>
+            <p id="wnFeat1Desc">Bugün, Dün, Son 7 Gün hapları veya üzerinde sekme sayısı yazan aylık takvimden gün seçin. Filtre aktifken "Tümünü Aç" ve "Grubu Sil" yalnızca seçili gündeki sekmelere etki eder!</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-purple">🪗</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat2Title">Akordeon Modu &amp; Ayrılırken Başa Taşıma</h3>
+            <p id="wnFeat2Desc">Bir gruba tıkladığınızda diğer gruplar otomatik daralır. Sekmeden ayrıldığınız anda o sekme sessizce grubun 1. sırasına taşınır; geri döndüğünüzde son kullandığınız sekme hep en baştadır!</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-amber">🛡️</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat3Title">Araç Çubuğunda Canlı Engelleme Rozeti</h3>
+            <p id="wnFeat3Desc">4 katmanlı Oto-Yenileme Kalkanı bir yenileme girişimini durdurduğu salisede sağ üstteki AutoTab simgesinde sekmeye özel kehribar sayaç (1, 2, 3...) belirir; 0 iken gizli kalır.</p>
+          </div>
+        </div>
+
+        <div class="wn-card">
+          <div class="wn-icon wn-icon-blue">☁️</div>
+          <div class="wn-card-body">
+            <h3 id="wnFeat4Title">Hibrit Google Drive Eşitlemesi &amp; Gerçek Durum</h3>
+            <p id="wnFeat4Desc">Varsayılan Yerel &amp; Profil hafızasına ek olarak isteğe bağlı OAuth 2.0 Google Drive eşitlemesiyle 100 KB sınırını aşın ve Brave, Chrome, Edge arasında canlı kasa eşitleyin.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="wn-footer">
+        <span class="wn-footer-note" id="wnFooterNote">⚡ Sıfır harici kütüphane • %100 Yerel &amp; Gizlilik Odaklı • &lt; 45 KB</span>
+        <button id="btnCloseWhatsNew" class="wn-btn-primary">Harika, Keşfetmeye Başla! 🚀</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastBanner" class="toast-banner">İşlem tamamlandı</div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

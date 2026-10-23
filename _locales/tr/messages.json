@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "AutoTab - Akıllı Sekme Gruplayıcı, Sekme Kasası & Oto-Yenileme Kalkanı",
+    "description": "Eklentinin adı."
+  },
+  "appDesc": {
+    "message": "Sekmeleri otomatik gruplar, Sekme Kasası ile RAM boşaltıp bulutta eşitler, yarım kalan yazıları korur ve oto-yenilemeyi engeller.",
+    "description": "Eklentinin açıklaması."
+  },
+  "actionTitle": {
+    "message": "AutoTab v2.1",
+    "description": "Uzantı butonu araç ipucu."
+  }
+}
